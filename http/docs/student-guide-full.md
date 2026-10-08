@@ -11,7 +11,7 @@
 
 This laboratory introduces the HTTP protocol, caching mechanisms, and HTTPS/TLS security. You will use command-line tools (`curl`, `openssl`) to interact with web servers and analyze protocol behavior.
 
-**Duration:** 4 hours total (2h basic + 2h advanced)
+**Duration:** 4 hours total (Lab 1: 2 hours, Lab 2: 2 hours)
 
 **Prerequisites:**
 - Basic understanding of TCP/IP networking
@@ -110,7 +110,7 @@ Once inside the client container, these helper commands are available:
 
 ---
 
-# PART A: HTTP Basics (Approx. 2 hours)
+# LAB 1: HTTP Basics (Approx. 2 hours)
 
 ## Exercise A1: HTTP Request/Response Structure
 
@@ -448,7 +448,7 @@ the proxy are:
 
 ---
 
-## Part A Deliverables
+## Deliverables
 
 Submit a report containing:
 1. Answers to all tasks
@@ -458,10 +458,20 @@ Submit a report containing:
 
 ---
 
+## Final Checklist (Lab 1)
+
+Before submitting your Lab 1 report, ensure you have:
+
+- [ ] Documented all HTTP methods tested
+- [ ] Created a caching strategy comparison table
+- [ ] Captured and analysed ETag / conditional requests
+
+---
+
 ## Stopping the Lab
 
-When you have finished Part A, stop the lab so that it does not keep running
-(and restart with every VM boot) until Part B:
+When you have finished, stop the lab so that it does not keep running
+(and restart with every VM boot) until Lab 2:
 
 ```bash
 # Exit client container
@@ -471,19 +481,19 @@ exit
 ./bootstrap.sh destroy
 ```
 
-Part B starts with *Preparing the Lab*, which updates the files and deploys
+Lab 2 starts with *Preparing the Lab*, which updates the files and deploys
 the lab again.
 
 ---
-# PART B: Advanced Topics (Approx. 2 hours)
+# LAB 2: HTTPS and Advanced Topics (Approx. 2 hours)
 
 ---
 
 ## Preparing the Lab
 
-Part B is a separate lab session, usually some weeks after Part A, on the
-same VM. In the meantime the lab files may have been updated, and the Part A
-lab may still be running: after a VM reboot its containers restart
+Lab 2 is a separate lab session, usually some weeks after Lab 1, on the
+same VM. In the meantime the lab files may have been updated, and the Lab 1
+environment may still be running: after a VM reboot its containers restart
 automatically, but with the **old** configuration. Prepare the lab as follows:
 
 1. Start the lab VM and **make sure your host PC is online**. Open the terminal application.
@@ -496,11 +506,11 @@ automatically, but with the **old** configuration. Prepare the lab as follows:
    ```
 
    - If git reports *"Your local changes to the following files would be
-     overwritten by merge"*, you edited lab files during Part A. Discard those
+     overwritten by merge"*, you edited lab files during Lab 1. Discard those
      edits with `git restore .` and run the `git merge` command again. (Your
      files in `content/saved/` are not affected.)
    - If `~/TUIN-labs` does not exist, follow *Fetching the Lab Files* in the
-     Part A manual (Case B).
+     Lab 1 manual (Case B).
 
 3. **Always redeploy the lab**, even if it seems to be running – this replaces
    any old containers with fresh ones that use the updated files:
@@ -512,9 +522,9 @@ automatically, but with the **old** configuration. Prepare the lab as follows:
    ```
 
    The cache of the proxy starts empty after a redeploy; this is expected.
-   Files you saved in `/home/student/saved` during Part A are kept.
+   Files you saved in `/home/student/saved` during Lab 1 are kept.
 
-The helper commands from Part A (`webserver`, `proxy`, `secure`, `cache_test`,
+The helper commands from Lab 1 (`webserver`, `proxy`, `secure`, `cache_test`,
 `tls_info`, `tls_handshake`) are available in the client again.
 
 ---
@@ -893,7 +903,7 @@ Run it with `sh /home/student/saved/api-test.sh`.
 
 ---
 
-## Part B Deliverables
+## Deliverables
 
 Submit a report containing:
 1. Answers to all tasks with supporting evidence
@@ -904,13 +914,10 @@ Submit a report containing:
 
 ---
 
-## Final Checklist
+## Final Checklist (Lab 2)
 
-Before submitting, ensure you have:
+Before submitting your Lab 2 report, ensure you have:
 
-- [ ] Documented all HTTP methods tested
-- [ ] Created caching strategy comparison table
-- [ ] Captured and analyzed ETag/conditional requests
 - [ ] Examined TLS handshake and certificates
 - [ ] Compared HTTP vs HTTPS traffic visibility
 - [ ] Tested stale-while-revalidate behavior

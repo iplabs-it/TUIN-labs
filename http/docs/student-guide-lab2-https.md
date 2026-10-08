@@ -1,12 +1,12 @@
-# PART B: Advanced Topics (Approx. 2 hours)
+# LAB 2: HTTPS and Advanced Topics (Approx. 2 hours)
 
 ---
 
 ## Preparing the Lab
 
-Part B is a separate lab session, usually some weeks after Part A, on the
-same VM. In the meantime the lab files may have been updated, and the Part A
-lab may still be running: after a VM reboot its containers restart
+Lab 2 is a separate lab session, usually some weeks after Lab 1, on the
+same VM. In the meantime the lab files may have been updated, and the Lab 1
+environment may still be running: after a VM reboot its containers restart
 automatically, but with the **old** configuration. Prepare the lab as follows:
 
 1. Start the lab VM and **make sure your host PC is online**. Open the terminal application.
@@ -19,11 +19,11 @@ automatically, but with the **old** configuration. Prepare the lab as follows:
    ```
 
    - If git reports *"Your local changes to the following files would be
-     overwritten by merge"*, you edited lab files during Part A. Discard those
+     overwritten by merge"*, you edited lab files during Lab 1. Discard those
      edits with `git restore .` and run the `git merge` command again. (Your
      files in `content/saved/` are not affected.)
    - If `~/TUIN-labs` does not exist, follow *Fetching the Lab Files* in the
-     Part A manual (Case B).
+     Lab 1 manual (Case B).
 
 3. **Always redeploy the lab**, even if it seems to be running – this replaces
    any old containers with fresh ones that use the updated files:
@@ -35,9 +35,9 @@ automatically, but with the **old** configuration. Prepare the lab as follows:
    ```
 
    The cache of the proxy starts empty after a redeploy; this is expected.
-   Files you saved in `/home/student/saved` during Part A are kept.
+   Files you saved in `/home/student/saved` during Lab 1 are kept.
 
-The helper commands from Part A (`webserver`, `proxy`, `secure`, `cache_test`,
+The helper commands from Lab 1 (`webserver`, `proxy`, `secure`, `cache_test`,
 `tls_info`, `tls_handshake`) are available in the client again.
 
 ---
@@ -209,7 +209,7 @@ curl -I -L http://https-server/
 
 ### B3.1: Stale-While-Revalidate – Inside and Outside the Window
 
-In A4.4 you saw a stale copy being served shortly after `max-age` expired.
+In Lab 1 (A4.4) you saw a stale copy being served shortly after `max-age` expired.
 Here you compare two cached copies of `/news/` (`max-age=60`,
 `stale-while-revalidate=30`): copy **a** is requested again *inside* the
 stale window, copy **b** only *after* it. The query string makes them two
@@ -416,7 +416,7 @@ Run it with `sh /home/student/saved/api-test.sh`.
 
 ---
 
-## Part B Deliverables
+## Deliverables
 
 Submit a report containing:
 1. Answers to all tasks with supporting evidence
@@ -429,11 +429,8 @@ Submit a report containing:
 
 ## Final Checklist
 
-Before submitting, ensure you have:
+Before submitting your report, ensure you have:
 
-- [ ] Documented all HTTP methods tested
-- [ ] Created caching strategy comparison table
-- [ ] Captured and analyzed ETag/conditional requests
 - [ ] Examined TLS handshake and certificates
 - [ ] Compared HTTP vs HTTPS traffic visibility
 - [ ] Tested stale-while-revalidate behavior
