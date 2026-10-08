@@ -91,6 +91,10 @@ cd ~/TUIN-labs/http
 ./bootstrap.sh client
 ```
 
+The first time you deploy, `bootstrap.sh` asks for your **student index number**. The lab is personalised with it: a few values (the items of the REST API, some cache lifetimes, the details of the TLS certificate) differ from student to student, and every response of the lab servers carries an `X-Lab-Token` header derived from your number. Your report is checked against these values, so enter your own number and keep the same one in Lab 2.
+
+Your work in the `client` container is **recorded**: everything you type and see is written to `content/saved/sessions/` on the VM. The recordings are part of your submission (see Deliverables) – they document how you worked, so you do not need to paste every command into the report.
+
 ### 2.2 Helper Commands
 
 Inside the `client` container, the helper commands shown in Table 2 are available to shorten common requests.
@@ -421,6 +425,7 @@ Submit a report containing:
 1. Answers to all tasks.
 2. Screenshots or terminal outputs demonstrating the key concepts.
 3. A summary table of the caching strategies you observed (consolidating Exercises A3 and A4): for each path, its Cache-Control value and the X-Cache-Status values seen through the proxy.
+4. Your student index number on the first page, and the archive created by `./bootstrap.sh package` (run it on the VM after leaving the client; it contains your saved files and the session recordings).
 
 > **⚠** *The clarity and structure of your report will impact your final score. Group related observations together rather than answering question-by-question.*
 
@@ -439,6 +444,9 @@ When you have finished, stop the lab so that it does not keep running (and resta
 ```bash
 # Exit client container
 exit
+
+# Package your results for submission
+./bootstrap.sh package
 
 # Stop the lab
 ./bootstrap.sh destroy
@@ -478,6 +486,8 @@ Lab 2 is a separate lab session, usually some weeks after Lab 1, on the same VM.
    ./bootstrap.sh deploy
    ./bootstrap.sh client
    ```
+
+`bootstrap.sh` remembers the student index number you entered in Lab 1 (file `http/.student-id`). If it asks for it again (for example on a freshly downloaded VM), enter the **same** number – your personalised values and `X-Lab-Token` must not change between the two labs. As in Lab 1, your client session is recorded to `content/saved/sessions/`.
 
 The cache of the proxy starts empty after a redeploy; this is expected. Files you saved in `/home/student/saved` during Lab 1 are kept.
 
@@ -834,6 +844,7 @@ Submit a report containing:
 3. Performance comparison between HTTP and HTTPS.
 4. Analysis of at least three caching scenarios.
 5. Working API interaction script.
+6. Your student index number on the first page, and the archive created by `./bootstrap.sh package` (run it on the VM after leaving the client; it contains your saved files and the session recordings).
 
 ## 4 FINAL CHECKLIST
 
@@ -853,6 +864,9 @@ When you are finished with the lab, clean up:
 ```bash
 # Exit client container
 exit
+
+# Package your results for submission
+./bootstrap.sh package
 
 # Stop the lab
 ./bootstrap.sh destroy
