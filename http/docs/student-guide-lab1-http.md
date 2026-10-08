@@ -11,7 +11,7 @@
 
 This laboratory introduces the HTTP protocol, caching mechanisms, and HTTPS/TLS security. You will use command-line tools (`curl`, `openssl`) to interact with web servers and analyze protocol behavior.
 
-**Duration:** 4 hours total (2h basic + 2h advanced)
+**Duration:** 2 hours. Lab 2 (HTTPS and Advanced Topics) is a separate session of about 2 hours and uses the same lab environment.
 
 **Prerequisites:**
 - Basic understanding of TCP/IP networking
@@ -110,7 +110,7 @@ Once inside the client container, these helper commands are available:
 
 ---
 
-# PART A: HTTP Basics (Approx. 2 hours)
+# LAB 1: HTTP Basics (Approx. 2 hours)
 
 ## Exercise A1: HTTP Request/Response Structure
 
@@ -448,7 +448,7 @@ the proxy are:
 
 ---
 
-## Part A Deliverables
+## Deliverables
 
 Submit a report containing:
 1. Answers to all tasks
@@ -458,10 +458,20 @@ Submit a report containing:
 
 ---
 
+## Final Checklist
+
+Before submitting your report, ensure you have:
+
+- [ ] Documented all HTTP methods tested
+- [ ] Created a caching strategy comparison table
+- [ ] Captured and analysed ETag / conditional requests
+
+---
+
 ## Stopping the Lab
 
-When you have finished Part A, stop the lab so that it does not keep running
-(and restart with every VM boot) until Part B:
+When you have finished, stop the lab so that it does not keep running
+(and restart with every VM boot) until Lab 2:
 
 ```bash
 # Exit client container
@@ -471,7 +481,7 @@ exit
 ./bootstrap.sh destroy
 ```
 
-Part B starts with *Preparing the Lab*, which updates the files and deploys
+Lab 2 starts with *Preparing the Lab*, which updates the files and deploys
 the lab again.
 
 ---

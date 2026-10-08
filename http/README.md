@@ -61,15 +61,16 @@ http-lab/
 │   └── generate-certs.sh     # TLS certificates
 ├── certs/                    # Generated certificates
 └── docs/
-    ├── student-guide-part-a.md
-    ├── student-guide-part-b.md
+    ├── student-guide-lab1-http.md
+    ├── student-guide-lab2-https.md
+    ├── student-guide-full.md
     └── instructor-key.md
 ```
 
 ## Duration
 
-- **Part A (Basic)**: ~2 hours
-- **Part B (Advanced)**: ~2 hours
+- **Lab 1 — HTTP** (`lab1-http`): ~2 hours
+- **Lab 2 — HTTPS** (`lab2-https`): ~2 hours
 - **Total**: ~4 hours
 
 ## Requirements
@@ -89,7 +90,7 @@ http-lab/
 
 ## Topics Covered
 
-### Part A (Basic)
+### Lab 1 — HTTP (`lab1-http`)
 - HTTP request/response structure
 - HTTP methods (GET, POST, PUT, DELETE)
 - Content negotiation
@@ -97,7 +98,7 @@ http-lab/
 - ETag and conditional requests
 - Caching proxy behavior
 
-### Part B (Advanced)
+### Lab 2 — HTTPS (`lab2-https`)
 - TLS handshake analysis
 - Certificate inspection
 - Security headers (HSTS, X-Frame-Options, etc.)
