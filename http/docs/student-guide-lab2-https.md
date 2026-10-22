@@ -1,5 +1,5 @@
 # HTTP Protocol Laboratory
-## Lab 2 — HTTPS and Advanced Topics
+## Lab 2 - HTTPS and Advanced Topics
 
 *TLS · OpenSSL · Performance · Security*
 
@@ -10,13 +10,13 @@
 
 ## 1 INTRODUCTION
 
-This manual is Lab 2 of the HTTP laboratory and builds on the foundation laid in Lab 1 (HTTP Basics). Where Lab 1 focused on the HTTP wire format and caching basics, this lab explores HTTPS/TLS, encrypted traffic analysis, advanced caching scenarios, performance measurement, and practical scripting tasks. The same containerised lab environment is used — section 1.1 explains how to prepare it for this session; see the Lab 1 manual for the helper-command details.
+This manual is Lab 2 of the HTTP laboratory and builds on the foundation laid in Lab 1 (HTTP Basics). Where Lab 1 focused on the HTTP wire format and caching basics, this lab explores HTTPS/TLS, encrypted traffic analysis, advanced caching scenarios, performance measurement, and practical scripting tasks. The same containerised lab environment is used - section 1.1 explains how to prepare it for this session; see the Lab 1 manual for the helper-command details.
 
 Each exercise builds on the previous one; work through them in order.
 
 ### 1.1 Preparing the Lab
 
-Lab 2 is a separate lab session, usually some weeks after Lab 1, on the same VM. In the meantime the lab files may have been updated, and the Lab 1 environment may still be running: after a VM reboot its containers restart automatically, but with the **old** configuration. Prepare the lab as follows:
+Lab 2 is a separate lab session, executed on the same VM as Lab 1. In the meantime the lab files may have been updated, and the Lab 1 environment may still be running: after a VM reboot its containers restart automatically, but with the **old** configuration. Prepare the lab as follows:
 
 1. Start the lab VM and **make sure your host PC is online**. Open the terminal application.
 2. Fetch the latest lab files and merge the latest version of the HTTP-lab branch:
@@ -29,7 +29,7 @@ Lab 2 is a separate lab session, usually some weeks after Lab 1, on the same VM.
 
    - If git reports *"Your local changes to the following files would be overwritten by merge"*, you edited lab files during Lab 1. Discard those edits with `git restore .` and run the `git merge` command again. (Your files in `content/saved/` are not affected.)
    - If `~/TUIN-labs` does not exist, follow *Fetching the Lab Files* in the Lab 1 manual (Case B).
-3. **Always redeploy the lab**, even if it seems to be running – this replaces any old containers with fresh ones that use the updated files:
+3. **Always redeploy the lab**, even if it seems to be running - this replaces any old containers with fresh ones that use the updated files:
 
    ```bash
    cd ~/TUIN-labs/http
@@ -37,15 +37,15 @@ Lab 2 is a separate lab session, usually some weeks after Lab 1, on the same VM.
    ./bootstrap.sh client
    ```
 
-`bootstrap.sh` remembers the student index number you entered in Lab 1 (file `http/.student-id`). If it asks for it again (for example on a freshly downloaded VM), enter the **same** number – your personalised values and `X-Lab-Token` must not change between the two labs. As in Lab 1, your client session is recorded to `content/saved/sessions/`.
+`bootstrap.sh` remembers the student index number you entered in Lab 1 (file `http/.student-id`). If it asks for it again (for example on a freshly downloaded VM), enter the **same** number - your personalised values and `X-Lab-Token` must not change between the two labs. As in Lab 1, your client session is recorded to `content/saved/sessions/`.
 
 The cache of the proxy starts empty after a redeploy; this is expected. Files you saved in `/home/student/saved` during Lab 1 are kept.
 
 The helper commands from Lab 1 (`webserver`, `proxy`, `secure`, `cache_test`, `tls_info`, `tls_handshake`) are available in the client again.
 
-## 2 HTTPS AND ADVANCED TOPICS — EXERCISES
+## 2 HTTPS AND ADVANCED TOPICS - EXERCISES
 
-### 2.1 Exercise B1 — HTTPS and TLS
+### 2.1 Exercise B1 - HTTPS and TLS
 
 #### B1.1 TLS Handshake Observation
 
@@ -56,7 +56,7 @@ Connect to the HTTPS server and observe the TLS handshake:
 openssl s_client -connect https-server:443 -state </dev/null
 ```
 
-`</dev/null` closes the connection right after the handshake. Without it, `s_client` stays connected and waits for you to type an HTTP request – press `Ctrl+C` to leave.
+`</dev/null` closes the connection right after the handshake. Without it, `s_client` stays connected and waits for you to type an HTTP request - press `Ctrl+C` to leave.
 
 **Tasks:**
 
@@ -122,10 +122,10 @@ openssl s_client -connect https-server:443 -tls1_3 </dev/null 2>&1 | \
 **Tasks:**
 
 1. What cipher is used with TLS 1.2? What cipher is used with TLS 1.3?
-2. The server is configured with four TLS 1.2 ciphers – two `ECDHE-ECDSA-…` and two `ECDHE-RSA-…`. Which ones are accepted, and why? (Hint: the public key type you found in B1.2.)
+2. The server is configured with four TLS 1.2 ciphers - two `ECDHE-ECDSA-…` and two `ECDHE-RSA-…`. Which ones are accepted, and why? (Hint: the public key type you found in B1.2.)
 3. Why are different ciphers used for different TLS versions?
 
-### 2.2 Exercise B2 — HTTPS vs HTTP in Practice
+### 2.2 Exercise B2 - HTTPS vs HTTP in Practice
 
 #### B2.1 Traffic Comparison
 
@@ -158,7 +158,7 @@ cat /tmp/https-capture.txt
 
 1. Can you read the HTTP request/response in the first capture?
 2. Can you read anything meaningful in the HTTPS capture?
-3. What specific information is visible even in encrypted traffic? (Hint: search the HTTPS capture for the server's name – where in the TLS handshake does it come from?)
+3. What specific information is visible even in encrypted traffic? (Hint: search the HTTPS capture for the server's name - where in the TLS handshake does it come from?)
 
 #### B2.2 Security Headers
 
@@ -198,9 +198,9 @@ curl -I -L http://https-server/
 2. What is the Location header value?
 3. Why is automatic HTTP→HTTPS redirect important?
 
-### 2.3 Exercise B3 — Advanced Caching Scenarios
+### 2.3 Exercise B3 - Advanced Caching Scenarios
 
-#### B3.1 Stale-While-Revalidate – Inside and Outside the Window
+#### B3.1 Stale-While-Revalidate - Inside and Outside the Window
 
 In Lab 1 (A4.4) you saw a stale copy being served shortly after `max-age` expired. Here you compare two cached copies of `/news/` (`max-age=60`, `stale-while-revalidate=30`): copy **a** is requested again *inside* the stale window, copy **b** only *after* it. The query string makes them two separate cache entries. The whole sequence takes about 95 s:
 
@@ -269,7 +269,7 @@ curl -sI "http://cache-proxy/static/styles.css?v=2" | grep -iE 'x-cache-status'
 3. What is the "cache invalidation" problem in computer science?
 4. How do CDNs handle cache invalidation?
 
-### 2.4 Exercise B4 — HTTP Performance Analysis
+### 2.4 Exercise B4 - HTTP Performance Analysis
 
 #### B4.1 Connection Timing
 
@@ -292,9 +292,9 @@ curl -w "\nTime breakdown:\n\
   -o /dev/null -s https://https-server/
 ```
 
-The values are cumulative: each one is measured from the start of the request. Run each command a few times – single measurements vary.
+The values are cumulative: each one is measured from the start of the request. Run each command a few times - single measurements vary.
 
-***Note:*** *if all phases show exactly the same value (e.g.* `0.024000s` *everywhere), the VM's clock is too coarse for this measurement – ask your instructor.*
+***Note:*** *if all phases show exactly the same value (e.g.* `0.024000s` *everywhere), the VM's clock is too coarse for this measurement - ask your instructor.*
 
 **Tasks:**
 
@@ -323,7 +323,7 @@ curl -sv http://webserver/ http://webserver/ -o /dev/null -o /dev/null 2>&1 | \
 2. Why is connection reuse important?
 3. What HTTP header controls keep-alive behavior?
 
-### 2.5 Exercise B5 — Practical Scenarios
+### 2.5 Exercise B5 - Practical Scenarios
 
 #### B5.1 Building a Simple Website Download
 
@@ -346,7 +346,7 @@ curl http://webserver/static/images/network-diagram.svg \
   -o network-diagram.svg
 ```
 
-To view the page, open `file:///home/iplabs/TUIN-labs/http/content/saved/index.html` in the VM's web browser. You can edit `index.html` inside the client with `vi`, or on the VM after you leave the client shell with `exit` – `./bootstrap.sh client` then hands the saved files over to your VM user.
+To view the page, open `file:///home/iplabs/TUIN-labs/http/content/saved/index.html` in the VM's web browser. You can edit `index.html` inside the client with `vi`, or on the VM after you leave the client shell with `exit` - `./bootstrap.sh client` then hands the saved files over to your VM user.
 
 **Tasks:**
 
@@ -426,9 +426,9 @@ Files in `~/TUIN-labs/http/content/saved` (your downloaded website and `api-test
 
 ## 6 REFERENCES
 
-- RFC 7234 — HTTP Caching
-- RFC 7232 — HTTP Conditional Requests
-- RFC 8446 — TLS 1.3
-- RFC 6797 — HTTP Strict Transport Security (HSTS)
+- RFC 7234 - HTTP Caching
+- RFC 7232 - HTTP Conditional Requests
+- RFC 8446 - TLS 1.3
+- RFC 6797 - HTTP Strict Transport Security (HSTS)
 - MDN Web Docs: HTTP Caching
 - curl documentation: https://curl.se/docs/
