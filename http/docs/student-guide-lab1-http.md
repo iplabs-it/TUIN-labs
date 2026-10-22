@@ -1,5 +1,5 @@
 # HTTP Protocol Laboratory
-## Lab 1 — HTTP Basics
+## Lab 1 - HTTP Basics
 
 *curl · HTTP/1.1 · Caching · Containers*
 
@@ -10,13 +10,13 @@
 
 ## 1 INTRODUCTION
 
-This laboratory introduces the HTTP protocol, caching mechanisms, and HTTPS/TLS security. You will use command-line tools (`curl`, `openssl`) to interact with web servers and analyze protocol behavior. This manual covers Lab 1 — HTTP Basics. HTTPS/TLS is covered in Lab 2 (HTTPS), which uses the same lab environment.
+This laboratory introduces the HTTP protocol, caching mechanisms, and HTTPS/TLS security. You will use command-line tools (`curl`, `openssl`) to interact with web servers and analyze protocol behavior. This manual covers Lab 1 - HTTP Basics. HTTPS/TLS is covered in Lab 2 (HTTPS), which uses the same lab environment.
 
 **Prerequisites:**
 
 - Basic understanding of TCP/IP networking
 - Familiarity with the command-line interface
-- Knowledge of HTTP client–server architecture
+- Knowledge of HTTP client-server architecture
 
 >
 >
@@ -35,7 +35,7 @@ To set up the virtual lab environment, follow these steps:
    ls -d ~/TUIN-labs/.git
    ```
 
-   **Case A** – the command prints `/home/iplabs/TUIN-labs/.git` (a copy of the repository is already there). Fetch the latest version and merge the lab branch:
+   **Case A** - the command prints `/home/iplabs/TUIN-labs/.git` (a copy of the repository is already there). Fetch the latest version and merge the lab branch:
 
    ```bash
    cd ~/TUIN-labs
@@ -43,7 +43,7 @@ To set up the virtual lab environment, follow these steps:
    git merge --no-edit origin/lab1-http
    ```
 
-   **Case B** – the command reports "No such file or directory" (there is no repository yet). Clone the repository and merge the lab branch:
+   **Case B** - the command reports "No such file or directory" (there is no repository yet). Clone the repository and merge the lab branch:
 
    ```bash
    cd ~
@@ -57,11 +57,11 @@ To set up the virtual lab environment, follow these steps:
    ls ~/TUIN-labs/http
    ```
 
-   The listing should include `bootstrap.sh` and `http-lab.clab.yml`. Running the Case A commands again later is safe – if nothing has changed, git merge just reports "Already up to date".
+   The listing should include `bootstrap.sh` and `http-lab.clab.yml`. Running the Case A commands again later is safe - if nothing has changed, git merge just reports "Already up to date".
 
 > **⚠** *Troubleshooting*
 >
-> If `git fetch` reports "not a git repository", `~/TUIN-labs` is not a valid copy of the repository. Remove it with `rm -rf ~/TUIN-labs` and follow Case B.
+> If `git clone` reports "destination path 'TUIN-labs' already exists" or `git fetch` reports "not a git repository", `~/TUIN-labs` is not a valid copy of the repository. Remove it with `rm -rf ~/TUIN-labs` and follow Case B.
 >
 > If `git merge` stops with "Please tell me who you are" or "unable to auto-detect email address", set a git identity once, then run the `git merge` command again:
 >
@@ -74,7 +74,7 @@ The lab consists of four containers, summarised in Table 1.
 
 | Container | Role | Address |
 |---|---|---|
-| `client` | Your workstation | — |
+| `client` | Your workstation | - |
 | `cache-proxy` | Caching reverse proxy | `cache-proxy:80` |
 | `webserver` | HTTP origin server | `webserver:80` |
 | `https-server` | HTTPS/TLS server | `https-server:443` |
@@ -93,7 +93,7 @@ cd ~/TUIN-labs/http
 
 The first time you deploy, `bootstrap.sh` asks for your **student index number**. The lab is personalised with it: a few values (the items of the REST API, some cache lifetimes, the details of the TLS certificate) differ from student to student, and every response of the lab servers carries an `X-Lab-Token` header derived from your number. Your report is checked against these values, so enter your own number and keep the same one in Lab 2.
 
-Your work in the `client` container is **recorded**: everything you type and see is written to `content/saved/sessions/` on the VM. The recordings are part of your submission (see Deliverables) – they document how you worked, so you do not need to paste every command into the report.
+Your work in the `client` container is **recorded**: everything you type and see is written to `content/saved/sessions/` on the VM. The recordings are part of your submission (see Deliverables) - they document how you worked, so you do not need to paste every command into the report.
 
 ### 2.2 Helper Commands
 
@@ -109,11 +109,11 @@ Inside the `client` container, the helper commands shown in Table 2 are availabl
 
 *Table 2. Client-side helper commands*
 
-## 3 HTTP BASICS — EXERCISES
+## 3 HTTP BASICS - EXERCISES
 
 **Approximate time:** 2 hours. Each exercise builds on the previous one; work through them in order.
 
-### 3.1 Exercise A1 — HTTP Request/Response Structure
+### 3.1 Exercise A1 - HTTP Request/Response Structure
 
 #### A1.1 Your First HTTP Request
 
@@ -150,7 +150,7 @@ curl -I http://webserver/
 
 #### A1.3 HTTP Methods
 
-The server exposes a simple REST API. Test different methods – the `-i` option makes curl print the response status line and headers before the body:
+The server exposes a simple REST API. Test different methods - the `-i` option makes curl print the response status line and headers before the body:
 
 ```bash
 # GET - retrieve items
@@ -169,15 +169,15 @@ curl -i -X PUT http://webserver/api/items/1
 curl -i -X DELETE http://webserver/api/items/1
 ```
 
-***Note:*** *the API is simulated – it returns realistic responses, but changes are not stored (e.g. item 1 is still there after the DELETE).*
+***Note:*** *the API is simulated - it returns realistic responses, but changes are not stored (e.g. item 1 is still there after the DELETE).*
 
 **Tasks:**
 
 1. What HTTP status code does `POST` return? Why?
 2. What is the semantic difference between `PUT` and `POST`?
-3. Try an unsupported method (e.g., `PATCH`) — what happens? Check the `Allow` header in the response.
+3. Try an unsupported method (e.g., `PATCH`) - what happens? Check the `Allow` header in the response.
 
-### 3.2 Exercise A2 — Content Negotiation
+### 3.2 Exercise A2 - Content Negotiation
 
 #### A2.1 Accept Headers
 
@@ -198,7 +198,7 @@ curl -s -H "Accept-Encoding: gzip" http://webserver/ | wc -c
 **Tasks:**
 
 1. What header indicates the response is compressed?
-2. Check the Vary header — what does it tell caches?
+2. Check the Vary header - what does it tell caches?
 3. How many bytes does compression save for this page (absolute and in %)?
 4. Compare the `ETag` and `Content-Length` headers of the two responses. Why does the ETag of the compressed response start with `W/`, and why is `Content-Length` missing?
 
@@ -230,7 +230,7 @@ curl -i -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) Firefox/128.0" http://we
 4. The `/ua/` responses carry `Vary: User-Agent`. What does this tell a cache, and what would go wrong without it?
 5. Why might servers care about User-Agent? Is it a reliable way to identify clients?
 
-### 3.3 Exercise A3 — HTTP Caching Fundamentals
+### 3.3 Exercise A3 - HTTP Caching Fundamentals
 
 #### A3.1 Understanding Cache-Control
 
@@ -244,7 +244,7 @@ curl -I http://webserver/validate/
 curl -I http://webserver/news/
 ```
 
-***Note:*** `X-Cache-Strategy` *is an informal label added by the lab server to help you navigate. It is not a standard header – browsers and caches act only on* `Cache-Control`*.*
+***Note:*** `X-Cache-Strategy` *is an informal label added by the lab server to help you navigate. It is not a standard header - browsers and caches act only on* `Cache-Control`*.*
 
 **Tasks:**
 
@@ -294,19 +294,19 @@ curl -i -H "If-None-Match: $ETAG" http://webserver/validate/
 
 #### A3.3 Last-Modified and If-Modified-Since
 
-Similar to ETag but time-based. First read the resource's Last-Modified, then issue two conditional requests — one with a date before it (the resource HAS changed since) and one with a date at or after it (the resource has NOT changed since).
+Similar to ETag but time-based. First read the resource's Last-Modified, then issue two conditional requests - one with a date before it (the resource HAS changed since) and one with a date at or after it (the resource has NOT changed since).
 
 ```bash
-# Step 1 — read Last-Modified
+# Step 1 - read Last-Modified
 curl -I http://webserver/static/styles.css
 # Note the Last-Modified value, e.g. "Sat, 16 May 2026 14:17:20 GMT"
 
-# Step 2a — IMS in the past (resource has changed since) → expect 200 OK
+# Step 2a - IMS in the past (resource has changed since) → expect 200 OK
 curl -s -o /dev/null -w "%{http_code} %{size_download} bytes\n" \
      -H "If-Modified-Since: Wed, 01 Jan 2025 00:00:00 GMT" \
      http://webserver/static/styles.css
 
-# Step 2b — replay the actual Last-Modified value → expect 304 Not Modified
+# Step 2b - replay the actual Last-Modified value → expect 304 Not Modified
 curl -s -o /dev/null -w "%{http_code} %{size_download} bytes\n" \
      -H "If-Modified-Since: <PASTE-LAST-MODIFIED-HERE>" \
      http://webserver/static/styles.css
@@ -318,7 +318,7 @@ curl -s -o /dev/null -w "%{http_code} %{size_download} bytes\n" \
 2. When would you use `If-Modified-Since` vs `If-None-Match`?
 3. What are the advantages and disadvantages of each? Consider clock skew, sub-second changes, and resources whose content changes without their mtime changing.
 
-### 3.4 Exercise A4 — Caching Proxy Behaviour
+### 3.4 Exercise A4 - Caching Proxy Behaviour
 
 #### A4.1 Cache HIT vs MISS
 
@@ -340,7 +340,7 @@ curl -I http://cache-proxy/static/styles.css
 **Tasks:**
 
 1. Check the `X-Cache-Status` header for each request.
-2. Check the `Age` header — what does it represent? How does it relate to `max-age`?
+2. Check the `Age` header - what does it represent? How does it relate to `max-age`?
 
 #### A4.2 Cache Bypass
 
@@ -370,7 +370,7 @@ curl -I http://cache-proxy/private/
 curl -I http://cache-proxy/private/
 ```
 
-A `MISS` on every request means the proxy never stores the response — unlike a single `MISS` followed by `HIT`s.
+A `MISS` on every request means the proxy never stores the response - unlike a single `MISS` followed by `HIT`s.
 
 **Tasks:**
 
@@ -400,9 +400,9 @@ Use the same ETag value as in A3.2. The values of `X-Cache-Status` used by the p
 
 | Value | Meaning |
 |---|---|
-| `MISS` | Not in the cache (or not storable) – fetched from the origin |
+| `MISS` | Not in the cache (or not storable) - fetched from the origin |
 | `HIT` | Served from the cache while still fresh |
-| `EXPIRED` | Cached copy had expired – full response fetched from the origin |
+| `EXPIRED` | Cached copy had expired - full response fetched from the origin |
 | `STALE` | Expired copy served anyway (allowed by stale-while-revalidate, or because the origin is down) |
 | `UPDATING` | Expired copy served while another request is refreshing it |
 | `REVALIDATED` | Expired copy confirmed by the origin with 304 Not Modified |
